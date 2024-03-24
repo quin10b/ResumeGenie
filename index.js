@@ -29,7 +29,7 @@ app.post("/",async (req,res) => {
         messages: [
             {"role": "system", "content": "You are QuinBOT, a helpful assistant to help create resumes"},
             ...messages
-
+            
             //{role: "user", content: `${message}`}
         ],
       });
@@ -41,6 +41,6 @@ app.post("/",async (req,res) => {
 
 });
 
-app.listen(process.env.PORT,()=>{
+app.listen(port,()=>{
     console.log(`Example app listening at http://localhost:${port}`);
 });
