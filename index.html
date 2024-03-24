@@ -73,7 +73,7 @@
             messageElement.classList.add('message');
             messageElement.classList.add('message--sent');
             
-            messageElement.innerHTML= `<div class = "message__text">You: ${userInputText}</div>`;
+            messageElement.innerHTML= `<div class = "message__input">You: ${userInputText}</div><br>`;
             chatlog.appendChild(messageElement);
             chatlog.scrollTop = chatlog.scrollHeight;
             
@@ -99,7 +99,7 @@
                 const messageElement = document.createElement('div');
                 messageElement.classList.add('message');
                 messageElement.classList.add('message--received');
-                messageElement.innerHTML= `<div class = "message__text">QuinGPT: ${data.completion.content}</div>`;
+                messageElement.innerHTML= `<div class = "message__output">QuinGPT: ${data.completion.content}</div><br>`;
                 chatlog.appendChild(messageElement);
                 chatlog.scrollTop = chatlog.scrollHeight;
             })

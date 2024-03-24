@@ -277,8 +277,12 @@ html{
     }
   }
 
-  .message__text{
+  .message__input{
     color: white;
+  }
+
+  .message__output{
+    color: green;
   }
 
 
