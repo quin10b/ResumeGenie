@@ -49,7 +49,7 @@
             chatlog.appendChild(messageElement);
             chatlog.scrollTop = chatlog.scrollHeight;
             
-            fetch('http://localhost:3000', {
+            fetch(`http://localhost:${port}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
