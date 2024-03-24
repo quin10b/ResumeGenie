@@ -31,7 +31,6 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.join(__dirname, 'index.html'));
   });
 }
-
   
 
 app.post("/",async (req,res) => {
@@ -54,14 +53,9 @@ app.post("/",async (req,res) => {
         completion: completion.choices[0].message
     })
 
-
 });
 
 app.listen(port,()=>{
     // do not add localhost here if you are deploying it
     console.log(`Example app listening at http://localhost:${port}`);
 });
-
-
-
-
