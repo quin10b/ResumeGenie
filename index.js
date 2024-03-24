@@ -20,13 +20,17 @@ app.use(cors());
 
 app.post("/",async (req,res) => {
 
-    const {message} = req.body
+    const {messages} = req.body
+    console.log(messages)
+
     const completion = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
         
         messages: [
-            {"role": "system", "content": "You are QuinBOT"},
-            {role: "user", content: `${message}`}],
+            {"role": "system", "content": "You are QuinBOT, a helpful assistant to help create resumes"},
+            ...messages
+            //{role: "user", content: `${message}`}
+        ],
       });
 
     res.json({
