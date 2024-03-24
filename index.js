@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import path from 'path';
 
 //allows retrieval of APIKey from .env file
 dotenv.config();
@@ -18,7 +19,6 @@ const port = process.env.PORT || 3000 ;
 app.use(bodyParser.json());
 app.use(cors());
 
-const path = require('path'); 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, 'front_end', 'build')));
   
