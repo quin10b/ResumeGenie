@@ -13,7 +13,7 @@ const openai = new OpenAI({
   });
 
 const app = express();
-const port = 3000;
+const port = Process.env.PORT || 3000 ;
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -42,5 +42,6 @@ app.post("/",async (req,res) => {
 });
 
 app.listen(port,()=>{
-    console.log(`Example app listening at http://localhost:${port}`);
+    // do not add localhost here if you are deploying it
+    console.log("server listening to port "+port);
 });
