@@ -16,6 +16,8 @@ const openai = new OpenAI({
 
 const app = express();
 
+const port = process.env.PORT || 3000;
+
 app.use(bodyParser.json());
 app.use(cors());
 
@@ -62,7 +64,6 @@ app.listen(port,()=>{
 });
 
 
-const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
