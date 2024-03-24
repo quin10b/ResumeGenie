@@ -43,5 +43,5 @@ app.post("/",async (req,res) => {
 
 app.listen(port,()=>{
     // do not add localhost here if you are deploying it
-    console.log("server listening to port "+port);
+    console.log(`Example app listening at http://localhost:${port}`);
 });
