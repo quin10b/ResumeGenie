@@ -24,13 +24,14 @@
     </main>
 	<script>
     
-    
+        //message history. Holds all the history of the chat
         let messages = []
         
         const chatlog = document.getElementById('chat-log');
         const userInput = document.getElementById('userInput');
         const form = document.querySelector('form');
 
+        //prints the input
         form.addEventListener('submit',(e)=>{
             e.preventDefault();
             const userInputText = userInput.value;
@@ -65,7 +66,8 @@
                 //pushes the response too so we can have a history of that too
                 let aiResponse = {"role": "assistant", "content": `${data.completion.content}`}
                 messages.push(aiResponse);
-
+                
+                //prints the output
                 const messageElement = document.createElement('div');
                 messageElement.classList.add('message');
                 messageElement.classList.add('message--received');

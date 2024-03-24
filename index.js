@@ -22,13 +22,14 @@ app.post("/",async (req,res) => {
 
     const {messages} = req.body
     console.log(messages)
-
+    
     const completion = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
         
         messages: [
             {"role": "system", "content": "You are QuinBOT, a helpful assistant to help create resumes"},
             ...messages
+            
             //{role: "user", content: `${message}`}
         ],
       });
