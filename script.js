@@ -1,60 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Q'sAPI</title>
-    <link rel="stylesheet" href="./template/static/css/work.css">
-    <link rel="icon" href="./favicon.ico" type="image/x-icon">
-
-
-  </head>
-  <body>
-      <!-- Navbar Section -->
-  <nav class="navbar">
-    <div class="navbar__container">
-      <a href="/template/index1.html" id="navbar__logo"><i class="fas spotify"></i>QuinBOT</a>
-      <div class="navbar__toggle" id="mobile-menu">
-        <span class="bar"></span> <span class="bar"></span>
-        <span class="bar"></span>
-      </div>
-      <ul class="navbar__menu">
-        <li class="navbar__item">
-          <a href="/template/index1.html" class="navbar__links">Home</a>
-        </li>
-        <li class="navbar__item">
-          <a href="/template/about.html" class="navbar__links">About</a>
-        </li>
-        <li class="navbar__item">
-          <a href="/template/contact.html" class="navbar__links">Contact</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-
- 
-    
-      <!-- Chat messages will be inserted here -->
-
-    <main>
-        <div class="chat-container"> 
-        <h1 class = "subText">Chat</h1>  
-        <div class="chat-box" id="chat-box">
-        <form action="">
-
-            <input type="text" name="message" id="userInput">
-            <button type="submit" class = "subButton">ENTER</button>
-        </form>
-        <div id="chat-log">
-
-        </div>
-    </div>
-    </div>
-    </main>
-	<script>
-    
-        //message history. Holds all the history of the chat
+ //message history. Holds all the history of the chat
         let messages = []
         
         const chatlog = document.getElementById('chat-log');
@@ -106,25 +50,3 @@
                 chatlog.scrollTop = chatlog.scrollHeight;
             })
         })
-
-    </script>
-
-
-
-
-  <!-- Footer Section -->
-  <div class="footer__container">
-    <div class="footer__links">
-      <div class="footer__link--wrapper">
-        <div class="footer__link--items">
-          <h2>Made by Quinton Baleikasavu</h2>
-          <a href="https://github.com/quin10b">Github</a>
-          <a href="https://www.instagram.com/">Instagram</a>
-          <a href="https://www.linkedin.com/in/quintonbale">LinkedIn</a>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-  </body>
-</html>

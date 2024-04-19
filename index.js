@@ -5,6 +5,8 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import readline from 'readline';
+
 
 //allows retrieval of APIKey from .env file
 dotenv.config();
@@ -23,6 +25,27 @@ app.use(cors());
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+//shuts down the server when stop is entered
+rl.setPrompt('Type "stop" to exit: ');
+
+rl.on('line', (input) => {
+  if (input.trim().toLowerCase() === 'stop') {
+    console.log('Exiting...');
+    rl.close();
+    process.exit(0);
+  } 
+  else {
+    console.log(`You entered: ${input}`);
+    rl.prompt();
+  }
+});
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname)));
@@ -55,7 +78,6 @@ app.post("/",async (req,res) => {
 
 });
 
-app.listen(port,()=>{
-    // do not add localhost here if you are deploying it
-    console.log(`Example app listening at http://localhost:${port}`);
-});
+process.stdout.write(`Web server running at http://localhost:${port}\n`);
+app.listen(port)
+    
