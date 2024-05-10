@@ -11,8 +11,10 @@ import readline from 'readline';
 //allows retrieval of APIKey from .env file
 dotenv.config();
 
+
 const openai = new OpenAI({
-    apiKey:  "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" // This is also the default, can be omitted
+    
+    apiKey: process.env.OPENAI_API_KEY // This is also the default, can be omitted
   });
 
 const app = express();
@@ -77,6 +79,7 @@ app.post("/",async (req,res) => {
 
 });
 
+console.log(openai.apiKey)
 process.stdout.write(`Web server running at http://localhost:${port}\n`);
 app.listen(port)
     
