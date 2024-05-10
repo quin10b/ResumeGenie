@@ -14,7 +14,7 @@ dotenv.config();
 
 const openai = new OpenAI({
     
-    apiKey: "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" // This is also the default, can be omitted
+    apiKey: process.env.OPENAI_API_KEY // This is also the default, can be omitted
   });
 
 const app = express();
