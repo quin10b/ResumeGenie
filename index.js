@@ -6,6 +6,11 @@ import cors from 'cors';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import readline from 'readline';
+const app = express();
+const port = 3000;
+
+app.set("view engine", "ejs");
+app.set("views", path.join("/Users/qtipschool/Desktop/QuinBOT", "template"));
 
 
 //allows retrieval of APIKey from .env file
@@ -17,8 +22,7 @@ const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY // This is also the default, can be omitted
   });
 
-const app = express();
-const port = process.env.PORT;
+
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -56,6 +60,9 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
   
+app.get("/", (request, response) => { 
+  response.render("index");
+});
 
 app.post("/",async (req,res) => {
 
