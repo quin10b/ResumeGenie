@@ -1,6 +1,6 @@
 Submitted by: Quinton Baleikasavu (directory id: quintonb)
 
-Group Members: Quinton Baleikasavu (quintonb)
+Group Members: Quinton Baleikasavu (quintonb), Amman Vahora (Avahora1), Ben Wesi (benwesi)
 
 App Description: Uses openAI API to develop a resume for the user. Uses mongodb for the login page, express.js for the get/post requests, and node.js for the server. 
 -Start the server by typing node index.js
