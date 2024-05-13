@@ -9,6 +9,18 @@
     font-family: "Cloud";
     src: url("Alphasmoke-OOX6.ttf") format("opentype");
   }
+
+  label {
+    font-family: "Cloud";
+  }
+
+  p{
+    color: white;
+  }
+
+  h1{
+    color: white;
+  }
   
   .navbar {
     background: #131313;
