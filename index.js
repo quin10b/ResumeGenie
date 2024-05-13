@@ -116,7 +116,7 @@ app.post('/login', async (req, res) => {
   if (user) {
     const result = req.body.password === user.password;
     if (result) {
-      res.render("index1");
+      res.render("indexx");
     } else {
       res.status(400).json({ error: "password doesn't match" });
     }
@@ -125,7 +125,7 @@ app.post('/login', async (req, res) => {
     res.status(400).json({ error: "User doesn't exist" });
   }
 
-  res.render('index1');
+  res.render('indexx');
 });
 
 
