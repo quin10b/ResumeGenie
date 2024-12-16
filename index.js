@@ -15,6 +15,22 @@ import { ServerApiVersion } from 'mongodb';
 const uri = `mongodb+srv://quin10b:Cooldudes12$@cluster0.413gp0l.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 
+// LaTeX template
+const latexTemplate = `
+\\documentclass{article}
+\\begin{document}
+
+\\section*{Title}
+{title_placeholder}
+
+\\section*{Author}
+{author_placeholder}
+
+\\section*{Content}
+{content_placeholder}
+
+\\end{document}
+`;
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 const databaseAndCollection = {db: "LoginCredentials", collection:"LoginCollection"};
@@ -73,8 +89,7 @@ app.get("/", (req, res) => {
 });
 
 
-app.post("/",async (req,res) => {
-
+app.post("/", async (req,res) => {
     const {messages} = req.body
     console.log(messages)
     
@@ -82,12 +97,13 @@ app.post("/",async (req,res) => {
         model: "gpt-3.5-turbo",
         
         messages: [
-            {"role": "system", "content": "You are QuinBOT, a helpful assistant to help create resumes"},
+            {"role": "system", "content": "You are ResumeGenie, a helpful assistant to help create resumes"},
             ...messages
             
             //{role: "user", content: `${message}`}
         ],
       });
+
 
     res.json({
         completion: completion.choices[0].message
@@ -107,22 +123,22 @@ app.post("/createAccount", (req, res) => {
 
 
 app.post('/login', async (req, res) => {
-  await client.connect()
-  let filter = {email: req.body.email};
-  const user = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).findOne(filter);
-  await client.close();
+  // await client.connect()
+  // let filter = {email: req.body.email};
+  // const user = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).findOne(filter);
+  // await client.close();
 
-  if (user) {
-    const result = req.body.password === user.password;
-    if (result) {
-      res.render("indexx");
-    } else {
-      res.status(400).json({ error: "password doesn't match" });
-    }
-  }
-  else{
-    res.status(400).json({ error: "User doesn't exist" });
-  }
+  // if (user) {
+  //   const result = req.body.password === user.password;
+  //   if (result) {
+  //     res.render("indexx");
+  //   } else {
+  //     res.status(400).json({ error: "password doesn't match" });
+  //   }
+  // }
+  // else{
+  //   res.status(400).json({ error: "User doesn't exist" });
+  // }
 
   res.render('indexx');
 });
