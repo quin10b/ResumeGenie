@@ -15,23 +15,6 @@ import { ServerApiVersion } from 'mongodb';
 const uri = `mongodb+srv://quin10b:Cooldudes12$@cluster0.413gp0l.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 
-// LaTeX template
-const latexTemplate = `
-\\documentclass{article}
-\\begin{document}
-
-\\section*{Title}
-{title_placeholder}
-
-\\section*{Author}
-{author_placeholder}
-
-\\section*{Content}
-{content_placeholder}
-
-\\end{document}
-`;
-
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 const databaseAndCollection = {db: "LoginCredentials", collection:"LoginCollection"};
 
@@ -68,6 +51,25 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
+const userInfo = {
+  name: '',
+  graduationDate: '',
+  education: '',
+  experience: '',
+  skills: ''
+};
+
+const resumePrompts = [
+  "What is your full name?",
+  "When did you/will you graduate?",
+  "What is your educational background?",
+  "What is your work experience?",
+  "What are your key skills?"
+];
+
+let currentPromptIndex = 0;
+
+
 //shuts down the server when stop is entered
 rl.setPrompt('Type "stop" to exit: ');
 
@@ -92,15 +94,60 @@ app.get("/", (req, res) => {
 app.post("/", async (req,res) => {
     const {messages} = req.body
     console.log(messages)
-    
+
+    const userResponse = messages[messages.length - 1].content;
+    // Store the response in the appropriate field
+    switch(currentPromptIndex) {
+        case 0:
+            userInfo.name = userResponse;
+            break;
+        case 1:
+            userInfo.graduationDate = userResponse;
+            break;
+        case 2:
+            userInfo.education = userResponse;
+            break;
+        case 3:
+            userInfo.experience = userResponse;
+            break;
+        case 4:
+            userInfo.skills = userResponse;
+            break;
+    }
+    let aiResponse;
+    if (currentPromptIndex < resumePrompts.length - 1) {
+        // If we haven't asked all questions, get the next prompt
+        currentPromptIndex++;
+        aiResponse = resumePrompts[currentPromptIndex];
+    } else {
+        // All information collected, generate resume
+        aiResponse = `Thank you! I'll now create your resume using this information:
+        Name: ${userInfo.name}
+        Graduation Date: ${userInfo.graduationDate}
+        Education: ${userInfo.education}
+        Experience: ${userInfo.experience}
+        Skills: ${userInfo.skills}
+        
+        Let me generate a professional resume format for you...`;
+        
+        // Here you could add logic to generate the actual resume
+        // Reset the prompt index for the next user
+        currentPromptIndex = 0;
+    }
+
     const completion = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
         
         messages: [
-            {"role": "system", "content": "You are ResumeGenie, a helpful assistant to help create resumes"},
-            ...messages
-            
-            //{role: "user", content: `${message}`}
+          {
+            "role": "system",
+            "content": "You are ResumeGenie, a helpful assistant to help create resumes"
+        },
+        ...messages,
+        {
+            "role": "assistant",
+            "content": aiResponse
+        }
         ],
       });
 
@@ -151,7 +198,9 @@ async function addAccount(client, databaseAndCollection, login) {
   await client.close();
 }
 
-console.log(openai.apiKey)
-process.stdout.write(`Web server running at http://localhost:${port}\n`);
-app.listen(port)
+app.listen(port, () => {
+  console.log(`Web server running at http://localhost:${port}`);
+  // Initialize by setting the first prompt
+  currentPromptIndex = 0;
+});
     

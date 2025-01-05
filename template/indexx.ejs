@@ -54,62 +54,90 @@
     </main>
 	<script>
     
-        //message history. Holds all the history of the chat
-        let messages = []
-        
-        const chatlog = document.getElementById('chat-log');
-        const userInput = document.getElementById('userInput');
-        const form = document.querySelector('form');
+    let messages = [];
+const initialPrompt = "Hi! I'll help you create your resume. What is your full name?";
 
+const chatlog = document.getElementById('chat-log');
+const userInput = document.getElementById('userInput');
+const form = document.querySelector('form');
 
+// Display initial prompt when page loads
+window.addEventListener('DOMContentLoaded', () => {
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('message');
+    messageElement.classList.add('message--received');
+    messageElement.innerHTML = `<div class="message__output">QuinGPT: ${initialPrompt}</div><br>`;
+    chatlog.appendChild(messageElement);
+    
+    // Add initial prompt to messages array
+    messages.push({
+        "role": "assistant",
+        "content": initialPrompt
+    });
+});
 
-        //prints the input
-        form.addEventListener('submit',(e)=>{
-            console.log("Form submission event listener triggered!"); // Print statement
+// Handle form submission
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const userInputText = userInput.value;
 
-            e.preventDefault();
-            const userInputText = userInput.value;
+    // Add user message to history
+    const newMessage = {
+        "role": "user", 
+        "content": userInputText
+    };
+    messages.push(newMessage);
 
-            const newMessage = {"role": "user", "content": `${userInputText}`}
-            messages.push(newMessage);
+    // Clear input field
+    userInput.value = '';
 
-            userInput.value = '';
-
-            const messageElement = document.createElement('div');
-            messageElement.classList.add('message');
-            messageElement.classList.add('message--sent');
-            
-            messageElement.innerHTML= `<div class = "message__input">You: ${userInputText}</div><br>`;
-            chatlog.appendChild(messageElement);
-            chatlog.scrollTop = chatlog.scrollHeight;
-            
-            fetch(`http://localhost:3000`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    //sends messages array to the server to get a response.
-                    //sends an array rather than a single text because we want it to have history of previous chat logs 
-                    messages
-                })
-            })
-
-            .then(res => res.json())
-            .then(data => {
-                //pushes the response too so we can have a history of that too
-                let aiResponse = {"role": "assistant", "content": `${data.completion.content}`}
-                messages.push(aiResponse);
-                
-                //prints the output
-                const messageElement = document.createElement('div');
-                messageElement.classList.add('message');
-                messageElement.classList.add('message--received');
-                messageElement.innerHTML= `<div class = "message__output">QuinGPT: ${data.completion.content}</div><br>`;
-                chatlog.appendChild(messageElement);
-                chatlog.scrollTop = chatlog.scrollHeight;
-            })
+    // Display user message
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('message');
+    messageElement.classList.add('message--sent');
+    messageElement.innerHTML = `<div class="message__input">You: ${userInputText}</div><br>`;
+    chatlog.appendChild(messageElement);
+    chatlog.scrollTop = chatlog.scrollHeight;
+    
+    // Send to server
+    fetch(`http://localhost:3000`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            messages
         })
+    })
+    .then(res => res.json())
+    .then(data => {
+        // Add AI response to history
+        let aiResponse = {
+            "role": "assistant", 
+            "content": data.completion.content
+        };
+        messages.push(aiResponse);
+        
+        // Display AI response
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('message');
+        messageElement.classList.add('message--received');
+        messageElement.innerHTML = `<div class="message__output">QuinGPT: ${data.completion.content}</div><br>`;
+        chatlog.appendChild(messageElement);
+        chatlog.scrollTop = chatlog.scrollHeight;
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Display error message in chat
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('message');
+        messageElement.classList.add('message--received');
+        messageElement.classList.add('message--error');
+        messageElement.innerHTML = `<div class="message__output">QuinGPT: Sorry, there was an error. Please try again.</div><br>`;
+        chatlog.appendChild(messageElement);
+        chatlog.scrollTop = chatlog.scrollHeight;
+    })
+})
 
     </script>
 
